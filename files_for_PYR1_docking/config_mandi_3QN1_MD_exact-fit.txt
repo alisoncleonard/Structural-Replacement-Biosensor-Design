@@ -1,0 +1,169 @@
+[DEFAULT]
+
+### REQUIRED ###
+
+# Your path to your local installation of Rosetta, e.g. /mnt/c/users/jorda/desktop/software/rosetta
+PathToRosetta = /users/alisonleonard/rosetta
+
+# Your path to your local installation of PyRosetta, e.g. /mnt/c/users/jorda/desktop/software/pyrosetta
+PathToPyrosetta = /users/alisonleonard/pyrosetta
+
+# Your unmodified pdb file e.g. my_enzyme.pdb
+PrePDBFileName = ../../structures/3QN1_H2O.pdb
+
+# Your pdb file after it has been modified by a mutation, deletion whatever it may be 
+# that is going to be replaced by a ligand e.g. my_enzyme_W100G.pdb
+PostPDBFileName = ../../structures/3QN1_nolig_H2O.pdb
+
+# The residue number of the structural feature you wish to map onto, this can be a 
+# ligand (if so the number would likely be 1) or a residue e.g. 12
+ResidueNumber = 1
+
+# The chain the previous residue number is on, e.g. A
+ChainLetter = X
+
+
+### OPTIONAL ###
+
+# Where to store the generated params and pdb files, make sure this
+# folder exists before you run the scripts
+PathToConformers = conformers
+
+# What to name the table that is generated
+CSVFileName = Ligands.csv
+
+# What to name the pandas DataFrame that is generated
+PKLFileName = Ligands.pkl
+
+# If your protein has a ligand and requires .params files, input a space separated list of them here (rare)
+ParamsList = ../../params/A8T.params
+
+# If you have multiple "residues" in your ligand, which one are we mapping onto (rare)
+LigandResidueNumber = 1
+
+# Whether to generate atom labels or fill them in yourself (False is reccommended)
+AutoGenerateAlignment = False
+
+
+
+[create_table]
+
+### REQUIRED ###
+
+# Input molecule SDF files separated by spaces, e.g. 'TRP.sdf WIN.sdf ABA.sdf' or alternatively 
+# if they follow a convention ' conf1.sdf conf2.sdf ' then a wild-card (*) can be used 'conf*'
+MoleculeSDFs =  ../Mandi_dihe_Ecutoff.sdf ../Mandi_dihe_Ecutoff.sdf
+
+
+### OPTIONAL ###
+
+# Set to True if your SDF files have a comment on the third line with a CAS ID, scifinder does this
+UseMoleculeID = False
+
+# Set to True if your molecules have no name on the sdf file, uses a simple count instead
+NoName = True
+
+
+
+
+[grade_conformers]
+
+### OPTIONAL ###
+
+# Width of the grid for performing backbone collision checking e.g. 1.0
+BinWidth = 1.0
+
+# By what factor to multiply pauling vdw radii by in the grid calculation e.g. 0.7
+VDW_Modifier = 0.70
+
+# Whether to check collision against just backbone or include side chain atoms
+IncludeSC = True
+
+
+
+
+[vdm]
+
+### REQUIRED ###
+
+# Where your reduced vdm database is located
+VDM_Directory = ../../vdm_database
+
+# A resfile containing residue that you wish to be mutated/included in vdM calculations
+# If you want a residue to be included for making vdMs but not to be able to mutate simply do
+# {res_num} A NATAA in the resfile
+Resfile = ../../resfiles/designable_PYR1_NATRO_4.resfile
+
+
+### OPTIONAL ###
+
+# What to name the outputed vdM score information .pkl file
+OutputFileName = vdm_scored.pkl
+
+# Name for the outputted VDMSpace files
+VDMSpaceFileStem = VDM-SPACE
+
+# Minimum accepted score for vdMs, 0 is the average
+VDMScoreCutoff = 0
+
+# Maximum accepted RMSD between ligand CG and vdM cG
+RMSDCutoff = 1.0
+
+# Whether to print out all interactions as pdb files
+PrintToPDB = True
+
+# Location to print out interactions
+PathToVDMInteractions = vdm_pdbs
+
+# Whether to linearly interpolate between 0 and score depending on RMSD
+LERP = False
+
+# Whether to approximate functional groups (e.g. approximate ethers as thioethers)
+Bioisostere = False
+
+
+
+[rosetta_design]
+
+## REQUIRED ###
+
+# The protein you wish to design against, note this should be pre-relaxed with Rosetta
+# Should usually be the same as PostPDBFileName
+DesignPDBFile = ../../structures/3QN1_nolig_H2O_relaxed.pdb
+
+# The vdm output file you wish to design against
+DesignPKLFile = vdm_scored.pkl
+
+# A resfile defining the mutations and residue changes allowed
+Resfile = ../../resfiles/designable_PYR1_NATRO_4.resfile
+
+# The residue number of a "focus" residue which is nearby to your structural feature,
+# This is used to define nearby residues as well as where to "anchor" the ligands
+FocusResidueNumber = 385
+
+# The chain the previous residue number is on
+FocusChain = B
+
+# XML file specifying scoring filters - specific for jump number of that scaffold
+Filters = ../../scoring_filters/filters_3QN1.xml
+
+# PDB-specific file for water alignment vector
+X = -1.476
+Y = 0.728
+Z = -0.728
+
+
+### OPTIONAL ###
+
+# Where to place the outputted designs and design scorefile
+PathToComplexes = rosetta_designs_NATRO4
+
+# How much of a score bonus to give vdM mutations as well as natural sequence positions
+FNRBonus = 1
+
+# How much of an additional score bonus to give to vdM mutations
+VDMBonus = 0.5
+
+# conformer range to design
+SubStart = 0
+SubEnd = 1
