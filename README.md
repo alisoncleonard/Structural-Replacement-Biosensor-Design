@@ -9,7 +9,7 @@ two options for modeling:
 
 * Python 3.8+
 * A local installation of [PyRosetta](https://www.pyrosetta.org/home)
-* [numPy](https://numpy.org/)
+* [numpy](https://numpy.org/)
 * [pandas](https://pandas.pydata.org/)
 
 
@@ -52,10 +52,10 @@ Once the config file has been set up with all of the necessary information. The 
 * For both methods, in config file set IncludeSC = True
 
 `python grade_conformers_docked_to_sequence.py conf.txt` 
-This method allows you to find molecule conformers and alignments that are compatible with the protein backbone and side chains of a set amino acid sequence, usually one that has been identified as binding your molecule in a low-affinity screen. 
+* This method allows you to find molecule conformers and alignments that are compatible with the protein backbone and side chains of a set amino acid sequence, usually one that has been identified as binding your molecule in a low-affinity screen. 
 
 `python grade_conformers_glycine_shaved_docking.py conf.txt` 
-This method allows you to dock the ligand conformers into a glycine-shaved ligand binding pocket, essentially considering only the protein backbone at defined positions. This is useful if you want to map where your ligand could potentially fit in the pocket. 
+* This method allows you to dock the ligand conformers into a glycine-shaved ligand binding pocket, essentially considering only the protein backbone at defined positions. This is useful if you want to map where your ligand could potentially fit in the pocket. 
 
 
 `python rosetta_design_score_passing_pdbs.py conf.txt`
@@ -67,9 +67,9 @@ This method allows you to dock the ligand conformers into a glycine-shaved ligan
 
 Protocol Capture 
 
-PyRosetta-4 2021 [Rosetta PyRosetta4.Release.python38.mac 2021.26+release.b308454c455dd04f6824cc8b23e54bbb9be2cdd7 2021-07-02T13:01:54] retrieved from: http://www.pyrosetta.org
-Python 3.8.13
-numpy 1.21.5
+PyRosetta-4 2021 [Rosetta PyRosetta4.Release.python38.mac 2021.26+release.b308454c455dd04f6824cc8b23e54bbb9be2cdd7 2021-07-02T13:01:54] retrieved from: http://www.pyrosetta.org \
+Python 3.8.13 \
+numpy 1.21.5 \
 pandas 1.4.2
 
 
