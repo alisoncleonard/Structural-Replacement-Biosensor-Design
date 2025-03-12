@@ -39,7 +39,7 @@ Information in the [DEFAULT] category is used by all scripts, and each script ha
 
 *REQUIRED* options need to be filled in to fit your own specific project’s needs, while *OPTIONAL* options do NOT need to be filled in and can be left as is. The default settings in the optional options are what we have found to work well. 
 
-*DOCKED TO SEQUENCE* and *GLYCINE SHAVED DOCKED* are both specified in the [grade_conformers] section. Choose the method you wish to run and input the information required. Leave the section blank if you are not running that method. 
+*DOCKED TO SEQUENCE* and *GLYCINE SHAVED DOCKING* are both specified in the [grade_conformers] section. Choose the method you wish to run and input the information required. Leave the section blank if you are not running that method. 
 
 **Scripts to run:**
 Run each script separately and verify the output is as intended before proceeding to the next step. 
