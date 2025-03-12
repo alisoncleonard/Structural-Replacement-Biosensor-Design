@@ -188,25 +188,29 @@ def align_to_residue_and_check_collision(pose, res, path_to_conformers, df, pkl_
                     if residue.is_water():
                         water_resid.append(i)
 
-                for j in range(1, copy_pose.residue(ligand_res_index).natoms() + 1):
-                    atom = copy_pose.residue(ligand_res_index).atom_type(j)
+                # include if statement to skip this step if an H-bond to water is not required for binding 
+                if len(water_resid) == 0:
+                    pass
+                else: 
+                    for j in range(1, copy_pose.residue(ligand_res_index).natoms() + 1):
+                        atom = copy_pose.residue(ligand_res_index).atom_type(j)
 
-                    if atom.element() == "N" or atom.element() == "O":
-                        # print(atom.element())
-                        atom_coords = copy_pose.residue(ligand_res_index).xyz(j)
-                
-                        for i in range(len(water_resid)): 
-                            # print(water_resid[i])
-                            for w in range(1, copy_pose.residue(water_resid[i]).natoms() + 1):
-                                atom = copy_pose.residue(water_resid[i]).atom_type(w)
-                                if atom.element() == "O":
-                                    water_coord = copy_pose.residue(water_resid[i]).xyz(w)
-                            distance_to_water = atom_coords.distance(water_coord)
-                            # print(distance_to_water)
+                        if atom.element() == "N" or atom.element() == "O":
+                            # print(atom.element())
+                            atom_coords = copy_pose.residue(ligand_res_index).xyz(j)
+                    
+                            for i in range(len(water_resid)): 
+                                # print(water_resid[i])
+                                for w in range(1, copy_pose.residue(water_resid[i]).natoms() + 1):
+                                    atom = copy_pose.residue(water_resid[i]).atom_type(w)
+                                    if atom.element() == "O":
+                                        water_coord = copy_pose.residue(water_resid[i]).xyz(w)
+                                distance_to_water = atom_coords.distance(water_coord)
+                                # print(distance_to_water)
 
-                            # 2.7 to 3.3 angstroms seemed to miss some alignments in PyMol 
-                            if distance_to_water < upper_water_distance and distance_to_water > lower_water_distance:
-                                keep_list.append(i)
+                                # 2.7 to 3.3 angstroms seemed to miss some alignments in PyMol 
+                                if distance_to_water < upper_water_distance and distance_to_water > lower_water_distance:
+                                    keep_list.append(i)
             # print(count)
             count += 1
 
