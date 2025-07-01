@@ -1,5 +1,7 @@
 **Structural replacement for the design of protein - small molecule binding** 
 
+Leonard, A.C. et al. Computational design of dynamic biosensors for emerging synthetic opioids. BioRxiv. https://www.biorxiv.org/content/10.1101/2025.05.15.654300v1.full.pdf
+
 **Required Software:**
 
 * Python 3.8+
