@@ -47,9 +47,9 @@ Information in the [DEFAULT] category is used by all scripts, and each script ha
 Run each script separately and verify the output is as intended before proceeding to the next step. 
 
 `python path/to/create_table.py path/to/config.txt`
-* This will create a the spreadsheet Ligands.csv from the ligand sdf files provided in the *MoleculeSDFs* option, create Rosetta .params files to make them Rosetta-readable, and create .pdb files for each ligand (note: you can rename this spreadsheet in the config fig if you choose)
+* This will create the spreadsheet Ligands.csv from the ligand sdf files provided in the *MoleculeSDFs* option, create Rosetta .params files to make them Rosetta-readable, and create .pdb files for each ligand (note: you can rename this spreadsheet in the config file if you choose)
 * If you want to have several conformers for each ligand, simply have all of the conformers for each ligand in one file and pass that to MoleculeSDFs
-* You can align the same conformer set in different ways by listing the same comformer set multiple times in the MoleculeSDFs line of the config file create table section. See the file config_example.txt in the folder files_for_PYR1_docking as an example. 
+* You can align the same conformer set in different ways by listing the same conformer file multiple times in the MoleculeSDFs line of the config file create table section. See the file config_example.txt in the folder files_for_PYR1_docking as an example. 
 
 *Manual input of atom alignments*
 * Here you will fill in the resulting “Molecule Atoms” and “Target Atoms” columns in the generated spreadsheet Ligands.csv by adding the atom labels for each. Atom labels can be found using PyMOL by clicking on the atoms.
