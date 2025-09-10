@@ -1,4 +1,4 @@
-**Structural replacement for the design of protein - small molecule binding** 
+**Structural Replacement Biosensor Design** 
 
 **Required Software:**
 
@@ -45,11 +45,12 @@ Information in the [DEFAULT] category is used by all scripts, and each script ha
 Run each script separately and verify the output is as intended before proceeding to the next step. 
 
 `python path/to/create_table.py path/to/config.txt`
-* This will create a spreadsheet from the ligand sdf files provided in the *MoleculeSDFs* option, create Rosetta .params files to make them Rosetta-readable, and create .pdb files for each ligand
+* This will create a the spreadsheet Ligands.csv from the ligand sdf files provided in the *MoleculeSDFs* option, create Rosetta .params files to make them Rosetta-readable, and create .pdb files for each ligand (note: you can rename this spreadsheet in the config fig if you choose)
 * If you want to have several conformers for each ligand, simply have all of the conformers for each ligand in one file and pass that to MoleculeSDFs
+* You can align the same conformer set in different ways by listing the same comformer set multiple times in the MoleculeSDFs line of the config file create table section. See the file config_example.txt in the folder files_for_PYR1_docking as an example. 
 
 *Manual input of atom alignments*
-* Here you will fill in the resulting “Molecule Atoms” and “Target Atoms” columns in the generated spreadsheet by adding the atom labels for each that can be found with a software such as PyMOL by clicking on the atoms.
+* Here you will fill in the resulting “Molecule Atoms” and “Target Atoms” columns in the generated spreadsheet Ligands.csv by adding the atom labels for each. Atom labels can be found using PyMOL by clicking on the atoms.
 * For example, if I wanted to align indole to Tryptophan, I’d go into PyMOL and find a substructure they share in common (such as the six-membered ring), choose corresponding atoms on that substructure, and list the atom labels .
 * This would ultimately look like a “C1-C5-C7” in the “Molecule Atoms” columns and a “"CD2-CZ2-CZ3” in the “Target Atoms” column (by chooosing three correpsonding atoms on the six-membered ring)
 * Copy the row of alignment information as many times as you would like to sample alignments in the next step. When performing the dock to sequence method, you may need to sample several hundred total alignments to find one that matches your input sequence. 
@@ -58,13 +59,13 @@ Run each script separately and verify the output is as intended before proceedin
 * This step samples molecule alignments to identify possible alignments that do not clash with the protein structure. Choose the script to run depending on the method you are using. 
 
 `python grade_conformers_docked_to_sequence.py conf.txt` 
-* This method allows you to find molecule conformers and alignments that are compatible with the protein backbone and side chains of a set amino acid sequence, usually one that has been identified as binding your molecule in a low-affinity screen. 
+* This method allows you to find molecule conformers and alignments that are compatible with the protein backbone and side chains of a set amino acid sequence, usually one that has been identified as binding your molecule in a low-affinity screen. This step generates PDB files containing protein-ligand structures binding the your input amino acid sequence. 
 
 `python grade_conformers_glycine_shaved_docking.py conf.txt` 
 * This method allows you to dock the ligand conformers into a glycine-shaved ligand binding pocket, essentially considering only the protein backbone at defined positions. This is useful if you want to map where your ligand could potentially fit in the pocket. 
 
 `python rosetta_design_score_passing_pdbs.py conf.txt`
-* This script allows you to perform Rosetta sequence design on any passing PDBs you choose. 
+* This script allows you to perform Rosetta sequence design on any passing PDBs you select. Use this script instead of running design on individual PDB files to easily handle ligand molecules without needing to further define them in Rosetta. 
 * Update the [rosetta_design] section of the Config file to include a Rosetta-relaxed version of PostPDBFile, a Rosetta resfile specifing the positions to mutation and the allowable mutations, and the PDB file numbers of the passing alignments you want to design around. The passing PDB files can be found in the folder "pass_score_repacked" and can be viewed in PyMOL. 
 
 If you have Rosetta installed, you can relax a pdb file with the following command, choosing the correct relax release for your computer operating system. 
@@ -81,5 +82,5 @@ numpy 1.21.5 \
 pandas 1.4.2
 
 
-This repository "Structural replacement for the design of protein - small molecule binding" was written by Alison Leonard and Jordan Wells. This repository builds on the Structural Replacement method developed by Jordan Wells as part of a 2021 Rosetta summer internship. His code can be found here and is an excellent reference: https://github.com/jordantwells42/structural-replacement.
+This repository "Structural Replacement Biosensor Design" was written by Alison Leonard and Jordan Wells. This repository builds on the Structural Replacement method developed by Jordan Wells as part of a 2021 Rosetta summer internship. His code can be found here and is an excellent reference: https://github.com/jordantwells42/structural-replacement.
 
